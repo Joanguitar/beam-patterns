@@ -1,24 +1,24 @@
 {
   "files": {
-    "main.css": "/static/css/main.83ba283e.chunk.css",
-    "main.js": "/static/js/main.fd3dc7af.chunk.js",
-    "main.js.map": "/static/js/main.fd3dc7af.chunk.js.map",
-    "runtime-main.js": "/static/js/runtime-main.c31ba872.js",
-    "runtime-main.js.map": "/static/js/runtime-main.c31ba872.js.map",
-    "static/js/2.a180701b.chunk.js": "/static/js/2.a180701b.chunk.js",
-    "static/js/2.a180701b.chunk.js.map": "/static/js/2.a180701b.chunk.js.map",
-    "index.html": "/index.html",
-    "precache-manifest.97ca8038773471ae0d6fa5c9a880e0bd.js": "/precache-manifest.97ca8038773471ae0d6fa5c9a880e0bd.js",
-    "service-worker.js": "/service-worker.js",
-    "static/css/main.83ba283e.chunk.css.map": "/static/css/main.83ba283e.chunk.css.map",
-    "static/js/2.a180701b.chunk.js.LICENSE.txt": "/static/js/2.a180701b.chunk.js.LICENSE.txt",
-    "static/media/logo.svg": "/static/media/logo.5d5d9eef.svg",
-    "static/media/nucleo-icons.css": "/static/media/nucleo.f0b489a5.woff"
+    "main.css": "/beam-patterns/static/css/main.dcc794a3.chunk.css",
+    "main.js": "/beam-patterns/static/js/main.5b586208.chunk.js",
+    "main.js.map": "/beam-patterns/static/js/main.5b586208.chunk.js.map",
+    "runtime-main.js": "/beam-patterns/static/js/runtime-main.2dcfd4c0.js",
+    "runtime-main.js.map": "/beam-patterns/static/js/runtime-main.2dcfd4c0.js.map",
+    "static/js/2.e29aaf97.chunk.js": "/beam-patterns/static/js/2.e29aaf97.chunk.js",
+    "static/js/2.e29aaf97.chunk.js.map": "/beam-patterns/static/js/2.e29aaf97.chunk.js.map",
+    "index.html": "/beam-patterns/index.html",
+    "precache-manifest.cca929eb88fe4cfcefd98d586e9ec842.js": "/beam-patterns/precache-manifest.cca929eb88fe4cfcefd98d586e9ec842.js",
+    "service-worker.js": "/beam-patterns/service-worker.js",
+    "static/css/main.dcc794a3.chunk.css.map": "/beam-patterns/static/css/main.dcc794a3.chunk.css.map",
+    "static/js/2.e29aaf97.chunk.js.LICENSE.txt": "/beam-patterns/static/js/2.e29aaf97.chunk.js.LICENSE.txt",
+    "static/media/logo.svg": "/beam-patterns/static/media/logo.5d5d9eef.svg",
+    "static/media/nucleo-icons.css": "/beam-patterns/static/media/nucleo.f0b489a5.woff"
   },
   "entrypoints": [
-    "static/js/runtime-main.c31ba872.js",
-    "static/js/2.a180701b.chunk.js",
-    "static/css/main.83ba283e.chunk.css",
-    "static/js/main.fd3dc7af.chunk.js"
+    "static/js/runtime-main.2dcfd4c0.js",
+    "static/js/2.e29aaf97.chunk.js",
+    "static/css/main.dcc794a3.chunk.css",
+    "static/js/main.5b586208.chunk.js"
   ]
 }
