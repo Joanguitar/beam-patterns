@@ -1,4 +1,4 @@
-import {range, exp, complex, multiply, dotMultiply, pi} from "mathjs"
+import {range, exp, complex, subtract, multiply, dotMultiply, pi, zeros} from "mathjs"
 
 function sinc(ang){
   if (Math.abs(ang) < 0.5) {
@@ -16,6 +16,10 @@ function sinc(ang){
   }
 }
 
+function expi(x){
+  return(exp(complex(0, x)))
+}
+
 class AntennaArray{
   constructor(n_antennas, lambda_ratio){
     this.n_antennas = n_antennas;
@@ -23,12 +27,11 @@ class AntennaArray{
     this.antenna_index = range(0, n_antennas)
   }
   bp_steer(bp, ang){
-    const steering_vector = exp(complex(0, multiply(this.antenna_index, ang)))
-    dotMultiply(bp, steering_vector)
+    const steering_vector = multiply(this.antenna_index, ang).map(element => expi(element));
+    return(dotMultiply(bp, steering_vector));
   }
   bp_sinc(width){
-    const sinc_index = multiply(this.antenna_index-(this.n_antennas-1)/2, width/(2*pi))
-    console.log(sinc_index);
+    const sinc_index = multiply(subtract(this.antenna_index, (this.n_antennas-1)/2), width/(2*pi))
     return(sinc_index.map(item => sinc(item)))
   }
   set_ang_domaing_rel(x){
@@ -37,7 +40,7 @@ class AntennaArray{
     this.response_domain_rel = exp_index.map(item => exp(complex(0, item)))
   }
   array_response_rel(bp){
-    return(multiply(bp, this.response_domain_rel))
+    return(multiply(this.response_domain_rel, bp))
   }
 }
 

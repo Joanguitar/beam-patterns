@@ -43,7 +43,7 @@ class App extends React.Component {
   }
   render() {
     var bp = this.antenna.bp_sinc(this.state.width);
-    bp = this.antenna.bp_steer(bp, this.center);
+    bp = this.antenna.bp_steer(bp, this.state.center);
     const rad = this.antenna.array_response_rel(bp);
     const beampattern = rad.map((rr, ii) => {return({
       x: this.circle[ii].x*rr,
