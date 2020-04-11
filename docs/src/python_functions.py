@@ -5,9 +5,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import time
 
-AntennaArray = beampatterns.AntennaArray
-
-Antenna = AntennaArray(256, 0.5)
+Antenna = beampatterns.AntennaArray(256, 0.5)
 
 width = 0.5*np.pi
 
