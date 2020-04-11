@@ -118,6 +118,7 @@ function App() {
         </CardBody>
         <CardFooter>
           <Button onClick="window.python.set_width(0.5)">
+            Width of 0.5
           </Button>
           Controls will go here
         </CardFooter>
