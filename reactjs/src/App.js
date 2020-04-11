@@ -29,6 +29,8 @@ import {
   UncontrolledTooltip
 } from "reactstrap";
 
+import Slider from '@material-ui/core/Slider';
+
 function filter_int(value) {
   return 2*value === Math.round(2*value) ? value : null;
 }
@@ -45,7 +47,18 @@ class App extends React.Component {
     this.antenna = new AntennaArray(16, 0.5);
     this.antenna.set_ang_domaing_rel(ang_domain_rel)
   }
+  handle_a_rel = (event, a_rel) => {
+    var b_rel = this.state.center + this.state.width/2
+    if (a_rel > b_rel) {
+      b_rel = a_rel
+    }
+    this.setState({
+      center: (a_rel+b_rel)/2,
+      width: b_rel-a_rel,
+    })
+  }
   render() {
+    // Beampattern rendering
     var bp = this.antenna.bp_sinc(this.state.width);
     bp = this.antenna.bp_steer(bp, this.state.center);
     var rad = this.antenna.array_response_rel(bp).map(rr => abs(rr)**2).toArray();
@@ -55,6 +68,12 @@ class App extends React.Component {
       x: cc.x*rad[ii]/r_max,
       y: cc.y*rad[ii]/r_max,
     })})
+
+    // Angular domain properties
+    const a_rel = this.state.center - this.state.width/2
+    const b_rel = this.state.center + this.state.width/2
+
+    // Render
     return (
       <div className="App">
         <Row>
@@ -173,10 +192,18 @@ class App extends React.Component {
                 />
               </CardBody>
               <CardFooter>
-                <Button>
-                  Width of 0.5
-                </Button>
-                Controls will go here
+                <Row>
+                  <Col md="6">
+                    <Slider
+                      value={a_rel}
+                      onChange={this.handle_a_rel}
+                      aria-labelledby="continuous-slider"
+                      min={-pi}
+                      max={pi}
+                      step={0.01}
+                    />
+                  </Col>
+                </Row>
               </CardFooter>
             </Card>
           </Col>
