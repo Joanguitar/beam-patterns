@@ -37,7 +37,7 @@ class AntennaArray{
   set_ang_domaing_rel(x){
     this.ang_domain_rel = x;
     const exp_index = x.map(item => multiply(this.antenna_index, item))
-    this.response_domain_rel = exp_index.map(item => exp(complex(0, item)))
+    this.response_domain_rel = exp_index.map(item => expi(item))
   }
   array_response_rel(bp){
     return(multiply(this.response_domain_rel, bp))

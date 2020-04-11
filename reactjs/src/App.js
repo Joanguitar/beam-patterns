@@ -3,7 +3,7 @@ import { Line, Bar, Scatter } from 'react-chartjs-2';
 import logo from './logo.svg';
 import './App.css';
 
-import {range, pi} from 'mathjs'
+import {abs, range, pi, max} from 'mathjs'
 import AntennaArray from './beampatterns.js'
 
 // reactstrap components
@@ -37,20 +37,24 @@ class App extends React.Component {
       width: 0,
     };
     const ang_domain_rel = range(-pi, pi, 0.01)
-    this.circle = ang_domain_rel.map(ang => {return({x: Math.cos(ang), y: Math.sin(ang)})})
+    this.circle = ang_domain_rel.map(ang => {return({x: Math.cos(ang), y: Math.sin(ang)})}).toArray()
     this.antenna = new AntennaArray(16, 0.5);
     this.antenna.set_ang_domaing_rel(ang_domain_rel)
   }
   render() {
     var bp = this.antenna.bp_sinc(this.state.width);
     bp = this.antenna.bp_steer(bp, this.state.center);
-    const rad = this.antenna.array_response_rel(bp);
-    const beampattern = rad.map((rr, ii) => {return({
-      x: this.circle[ii].x*rr,
-      y: this.circle[ii].y*rr,
+    const rad = this.antenna.array_response_rel(bp).map(rr => abs(rr)**2).toArray();
+    const r_max = max(rad)
+    const beampattern = this.circle.map((cc, ii) => {
+      return({
+      x: cc.x*rad[ii]/r_max,
+      y: cc.y*rad[ii]/r_max,
     })})
     return (
       <div className="App">
+        <Row>
+        <Col md="6">
         <Card>
           <CardHeader>
             <CardTitle>
@@ -103,6 +107,7 @@ class App extends React.Component {
                     {
                       barPercentage: 1.6,
                       gridLines: {
+                        display: true,
                         drawBorder: false,
                         color: "rgba(29,140,248,0.0)",
                         zeroLineColor: "transparent"
@@ -120,7 +125,7 @@ class App extends React.Component {
                     {
                       barPercentage: 1.6,
                       gridLines: {
-                        display: false,
+                        display: true,
                         drawBorder: false,
                         color: "rgba(29,140,248,0.1)",
                         zeroLineColor: "transparent"
@@ -145,7 +150,8 @@ class App extends React.Component {
             Controls will go here
           </CardFooter>
         </Card>
-        <script type="module">import * as python from './__target__/python_functions.js'; window.python = python;</script>
+        </Col>
+        </Row>
       </div>
     );
   }
