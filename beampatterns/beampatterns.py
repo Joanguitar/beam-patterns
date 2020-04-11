@@ -17,5 +17,8 @@ class AntennaArray:
         half_antennas = (self.N_antennas-1)/2
         return [np.sinc((width/(2*np.pi))*(ii-half_antennas)) for ii in range(self.N_antennas)]
     # Array response
-    def array_response(self, bp, x):
-        return np.dot(bp, np.exp(1j*np.arange(self.N_antennas)[:, np.newaxis]*np.array(x)[np.newaxis, :]))
+    def set_ang_domain_rel(self, x):
+        self.ang_domain_rel = x
+        self.response_domain_rel = np.exp(1j*np.arange(self.N_antennas)[:, np.newaxis]*np.array(x)[np.newaxis, :])
+    def array_response_rel(self, bp):
+        return np.dot(bp, self.response_domain_rel)
