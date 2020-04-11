@@ -1,6 +1,6 @@
 import numpy as np
 
-class AntennaArray(object):
+class AntennaArray:
     def __init__(self, N_antennas=16, lambda_ratio=0.5):
         self.N_antennas = N_antennas
         self.lambda_ratio = lambda_ratio
