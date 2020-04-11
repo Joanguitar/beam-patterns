@@ -1,7 +1,10 @@
 import React from 'react';
-import { Line, Bar, Scatter } from "react-chartjs-2";
+import { Line, Bar, Scatter } from 'react-chartjs-2';
 import logo from './logo.svg';
 import './App.css';
+
+import {range, pi} from 'mathjs'
+import AntennaArray from './beampatterns.js'
 
 // reactstrap components
 import {
@@ -26,106 +29,126 @@ import {
   UncontrolledTooltip
 } from "reactstrap";
 
-function App() {
-  return (
-    <div className="App">
-      <Card>
-        <CardHeader>
-          <CardTitle>
-            <h3>
-              Beam-pattern
-            </h3>
-          </CardTitle>
-        </CardHeader>
-        <CardBody>
-          <Scatter
-            id = "scatter-rel"
-            data = {{
-              datasets: [{
-                label: "sinc",
-                fill: true,
-                showLine: true,
-                lineTension: 0,
-                borderColor: "#1f8ef1",
-                borderWidth: 2,
-                borderDash: [],
-                borderDashOffset: 0.0,
-                pointBackgroundColor: "#1f8ef1",
-                pointBorderColor: "rgba(255,255,255,0)",
-                pointHoverBackgroundColor: "#1f8ef1",
-                pointBorderWidth: 20,
-                pointHoverRadius: 4,
-                pointHoverBorderWidth: 15,
-                pointRadius: 4,
-                data: [{x: 0, x: 0}],
-              }]
-            }}
-            options = {{
-              maintainAspectRatio: false,
-              legend: {
-                display: true
-              },
-              tooltips: {
-                backgroundColor: "#f5f5f5",
-                titleFontColor: "#333",
-                bodyFontColor: "#666",
-                bodySpacing: 4,
-                xPadding: 12,
-                mode: "nearest",
-                intersect: 0,
-                position: "nearest",
-              },
-              responsive: true,
-              scales: {
-                yAxes: [
-                  {
-                    barPercentage: 1.6,
-                    gridLines: {
-                      drawBorder: false,
-                      color: "rgba(29,140,248,0.0)",
-                      zeroLineColor: "transparent"
-                    },
-                    ticks: {
-                      suggestedMin: -1,
-                      suggestedMax: 1,
-                      display: false,
-                      fontColor: "#9a9a9a",
-                      stepSize: 1
+class App extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      center: 0,
+      width: 0,
+    };
+    const ang_domain_rel = range(-pi, pi, 0.01)
+    this.circle = ang_domain_rel.map(ang => {return({x: Math.cos(ang), y: Math.sin(ang)})})
+    this.antenna = new AntennaArray(16, 0.5);
+    this.antenna.set_ang_domaing_rel(ang_domain_rel)
+  }
+  render() {
+    var bp = this.antenna.bp_sinc(this.state.width);
+    bp = this.antenna.bp_steer(bp, this.center);
+    const rad = this.antenna.array_response_rel(bp);
+    const beampattern = rad.map((rr, ii) => {return({
+      x: this.circle[ii].x*rr,
+      y: this.circle[ii].y*rr,
+    })})
+    return (
+      <div className="App">
+        <Card>
+          <CardHeader>
+            <CardTitle>
+              <h3>
+                Beam-pattern
+              </h3>
+            </CardTitle>
+          </CardHeader>
+          <CardBody>
+            <Scatter
+              id = "scatter-rel"
+              data = {{
+                datasets: [{
+                  label: "sinc",
+                  fill: true,
+                  showLine: true,
+                  lineTension: 0,
+                  borderColor: "#1f8ef1",
+                  borderWidth: 2,
+                  borderDash: [],
+                  borderDashOffset: 0.0,
+                  pointBackgroundColor: "#1f8ef1",
+                  pointBorderColor: "rgba(255,255,255,0)",
+                  pointHoverBackgroundColor: "#1f8ef1",
+                  pointBorderWidth: 20,
+                  pointHoverRadius: 4,
+                  pointHoverBorderWidth: 15,
+                  pointRadius: 4,
+                  data: beampattern,
+                }]
+              }}
+              options = {{
+                maintainAspectRatio: false,
+                legend: {
+                  display: true
+                },
+                tooltips: {
+                  backgroundColor: "#f5f5f5",
+                  titleFontColor: "#333",
+                  bodyFontColor: "#666",
+                  bodySpacing: 4,
+                  xPadding: 12,
+                  mode: "nearest",
+                  intersect: 0,
+                  position: "nearest",
+                },
+                responsive: true,
+                scales: {
+                  yAxes: [
+                    {
+                      barPercentage: 1.6,
+                      gridLines: {
+                        drawBorder: false,
+                        color: "rgba(29,140,248,0.0)",
+                        zeroLineColor: "transparent"
+                      },
+                      ticks: {
+                        suggestedMin: -1,
+                        suggestedMax: 1,
+                        display: false,
+                        fontColor: "#9a9a9a",
+                        stepSize: 1
+                      }
                     }
-                  }
-                ],
-                xAxes: [
-                  {
-                    barPercentage: 1.6,
-                    gridLines: {
-                      display: false,
-                      drawBorder: false,
-                      color: "rgba(29,140,248,0.1)",
-                      zeroLineColor: "transparent"
-                    },
-                    ticks: {
-                      suggestedMin: -1,
-                      suggestedMax: 1,
-                      display: false,
-                      fontColor: "#9a9a9a",
-                      stepSize: 1
+                  ],
+                  xAxes: [
+                    {
+                      barPercentage: 1.6,
+                      gridLines: {
+                        display: false,
+                        drawBorder: false,
+                        color: "rgba(29,140,248,0.1)",
+                        zeroLineColor: "transparent"
+                      },
+                      ticks: {
+                        suggestedMin: -1,
+                        suggestedMax: 1,
+                        display: false,
+                        fontColor: "#9a9a9a",
+                        stepSize: 1
+                      }
                     }
-                  }
-                ]
-              }
-            }}
-          />
-        </CardBody>
-        <CardFooter>
-          <Button onClick="window.python.test(1.5)">
-            Width of 0.5
-          </Button>
-          Controls will go here
-        </CardFooter>
-      </Card>
-      <script type="module">import * as python from './__target__/python_functions.js'; window.python = python;</script>
-    </div>
-  );
+                  ]
+                }
+              }}
+            />
+          </CardBody>
+          <CardFooter>
+            <Button onClick="window.python.test(1.5)">
+              Width of 0.5
+            </Button>
+            Controls will go here
+          </CardFooter>
+        </Card>
+        <script type="module">import * as python from './__target__/python_functions.js'; window.python = python;</script>
+      </div>
+    );
+  }
 }
 
 export default App;
