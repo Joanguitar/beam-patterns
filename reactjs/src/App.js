@@ -29,6 +29,10 @@ import {
   UncontrolledTooltip
 } from "reactstrap";
 
+function filter_int(value) {
+  return 2*value === Math.round(2*value) ? value : null;
+}
+
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -100,12 +104,6 @@ class App extends React.Component {
                       borderWidth: 1,
                       borderDash: [],
                       borderDashOffset: 0.0,
-                      //pointBackgroundColor: "#1f8ef1",
-                      //pointBorderColor: "rgba(255,255,255,0)",
-                      //pointHoverBackgroundColor: "#1f8ef1",
-                      //pointBorderWidth: 20,
-                      //pointHoverRadius: 4,
-                      //pointHoverBorderWidth: 15,
                       pointRadius: 0,//4,
                       data: this.circle,
                     }, ...[0.25, 0.5, 0.75].map(rat => {return(
@@ -118,12 +116,6 @@ class App extends React.Component {
                         borderWidth: 1,
                         borderDash: [],
                         borderDashOffset: 0.0,
-                        //pointBackgroundColor: "#1f8ef1",
-                        //pointBorderColor: "rgba(255,255,255,0)",
-                        //pointHoverBackgroundColor: "#1f8ef1",
-                        //pointBorderWidth: 20,
-                        //pointHoverRadius: 4,
-                        //pointHoverBorderWidth: 15,
                         pointRadius: 0,//4,
                         data: this.circle.map(point => {return({x: rat*point.x, y: rat*point.y})}),
                       }
@@ -143,35 +135,36 @@ class App extends React.Component {
                     scales: {
                       yAxes: [
                         {
-                          barPercentage: 1.6,
                           gridLines: {
                             display: true,
                             drawBorder: false,
-                            color: "rgba(29,140,248,0.0)",
+                            color: "rgba(255,255,255,0.1)",
                             zeroLineColor: "transparent"
                           },
                           ticks: {
                             min: -1.2,
                             max: 1.2,
                             fontColor: "#9a9a9a",
-                            stepSize: 1
+                            stepSize: 2,
+                            callback: filter_int
                           }
                         }
                       ],
                       xAxes: [
                         {
-                          barPercentage: 1.6,
                           gridLines: {
                             display: true,
                             drawBorder: false,
-                            color: "rgba(29,140,248,0.1)",
+                            color: "rgba(255,255,255,0.1)",
                             zeroLineColor: "transparent"
                           },
                           ticks: {
+                            enabled: false,
                             min: -1.2,
                             max: 1.2,
                             fontColor: "#9a9a9a",
-                            stepSize: 1
+                            stepSize: 2,
+                            callback: filter_int
                           }
                         }
                       ]
