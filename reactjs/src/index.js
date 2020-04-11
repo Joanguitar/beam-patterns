@@ -4,6 +4,11 @@ import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 
+import "./assets/scss/black-dashboard-react.scss";
+import "./assets/demo/demo.css";
+import "./assets/css/nucleo-icons.css";
+//document.body.classList.add("white-content");
+
 ReactDOM.render(
   <React.StrictMode>
     <App />

@@ -1,6 +1,7 @@
 import {range, exp, complex, subtract, multiply, dotMultiply, pi, zeros} from "mathjs"
 
 function sinc(ang){
+  ang *= pi
   if (Math.abs(ang) < 0.5) {
     // Taylor seris: 1-x^2/3!+x^4/5!-x^6/7!...
     const ang_2 = ang**2;                // x^2
