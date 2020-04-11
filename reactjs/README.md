@@ -37,6 +37,41 @@ Instead, it will copy all the configuration files and the transitive dependencie
 
 You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
 
+## Deploy in a subpage
+
+#### index.js
+
+```javascript
+import { BrowserRouter as Router } from 'react-router-dom';
+import { Route } from 'react-router';
+const IS_DEV = !process.env.NODE_ENV || process.env.NODE_ENV === 'development'
+```
+```javascript
+  <Router basename={'/directory-name'}>
+    <Route path={IS_DEV ? '/' : '${process.env.PUBLIC_URL}/'} component={App} />
+  </Router>
+```
+
+#### package.json
+
+"homepage": "https://joanguitar.github.io/beam-patterns",
+
+#### Other files
+
+Substitute all url from
+
+```javascript
+'/path/in/the/browser'
+```
+to
+```javascript
+{(IS_DEV ? '/' : '${process.env.PUBLIC_URL}/') + 'path/in/the/browser'}
+```
+
+#### Source
+
+[Tutorial here](https://medium.com/@svinkle/how-to-deploy-a-react-app-to-a-subdirectory-f694d46427c1)
+
 ## Learn More
 
 You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
