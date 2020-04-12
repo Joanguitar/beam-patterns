@@ -1,7 +1,5 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { BrowserRouter as Router } from 'react-router-dom';
-import { Route } from 'react-router';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
@@ -15,9 +13,7 @@ const IS_DEV = !process.env.NODE_ENV || process.env.NODE_ENV === 'development'
 
 ReactDOM.render(
   <React.StrictMode>
-    <Router basename={'/beam-patterns'}>
-      <Route path='/' component={App} />
-    </Router>
+      <App />
   </React.StrictMode>,
   document.getElementById('root')
 );
