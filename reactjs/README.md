@@ -39,9 +39,13 @@ You don’t have to ever use `eject`. The curated feature set is suitable for sm
 
 ## Deploy in a subpage
 
-#### Make the app progressive
+#### package.json
 
-In index.js substitute
+```json
+"homepage": "https://joanguitar.github.io/beam-patterns",
+```
+
+#### index.js
 
 ```javascript
 serviceWorker.unregister();
@@ -51,38 +55,6 @@ by
 
 ```javascript
 serviceWorker.register();
-```
-
-#### package.json
-
-```json
-"homepage": "https://joanguitar.github.io/beam-patterns",
-```
-
-##### The json is the only file that needs to be modified
-#### index.js
-
-```javascript
-import { BrowserRouter as Router } from 'react-router-dom';
-import { Route } from 'react-router';
-const IS_DEV = !process.env.NODE_ENV || process.env.NODE_ENV === 'development'
-```
-```javascript
-  <Router basename={'/directory-name'}>
-    <Route path={IS_DEV ? '/' : '${process.env.PUBLIC_URL}/'} component={App} />
-  </Router>
-```
-
-#### Other files
-
-Substitute all url from
-
-```javascript
-'/path/in/the/browser'
-```
-to
-```javascript
-{(IS_DEV ? '/' : '${process.env.PUBLIC_URL}/') + 'path/in/the/browser'}
 ```
 
 #### Source
