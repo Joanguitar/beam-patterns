@@ -1,4 +1,4 @@
-import {abs, range, exp, complex, subtract, multiply, dotMultiply, pi, sum, sqrt} from "mathjs"
+import {abs, range, exp, complex, concat, subtract, multiply, dotMultiply, pi, sum, sqrt, zeros} from "mathjs"
 
 function sinc(ang){
   ang *= pi
@@ -64,8 +64,11 @@ class AntennaArray{
     return(dotMultiply(bp, steering_vector));
   }
   // Beam-pattern creation
+  bp_sinc_index(width){
+    return(multiply(subtract(this.antenna_index, (this.n_antennas-1)/2), width/(2*pi)))
+  }
   bp_sinc(width){
-    const sinc_index = multiply(subtract(this.antenna_index, (this.n_antennas-1)/2), width/(2*pi))
+    const sinc_index = this.bp_sinc_index(width)
     var bp = sinc_index.map(item => sinc(item))
     const bp_norm = sqrt(sum(bp.map(cc => abs(cc)**2)))
     bp = bp.map(cc => cc/bp_norm)

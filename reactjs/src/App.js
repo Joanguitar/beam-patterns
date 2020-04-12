@@ -1,4 +1,5 @@
 import React from 'react';
+import { Scatter } from 'react-chartjs-2';
 
 import {abs, range, pi, max} from 'mathjs';
 import AntennaArray from './beampatterns.js';
@@ -28,6 +29,23 @@ import { InlineMath, BlockMath } from 'react-katex';
 
 function valueLabelFormat(value){
   return(Math.round(value*180/pi)+'°')
+}
+
+function sinc(ang){
+  ang *= pi
+  if (Math.abs(ang) < 0.5) {
+    // Taylor seris: 1-x^2/3!+x^4/5!-x^6/7!...
+    const ang_2 = ang**2;                // x^2
+    var curr_term = 1;                   // current term
+    var output = 1;                      // the Taylor series result
+    for (var ii = 2; ii < 12; ii += 2) {
+      curr_term *= -ang_2/(ii*(ii+1))
+      output += curr_term
+    }
+    return output
+  } else {
+    return Math.sin(ang)/ang
+  }
 }
 
 class App extends React.Component {
@@ -200,6 +218,90 @@ class App extends React.Component {
       <div className="App">
         <Row>
           <Col lg="3">
+          <Card>
+          <CardBody>
+          <Scatter
+            data={{
+              datasets: [
+                {
+                  label: "sinc",
+                  fill: true,
+                  showLine: false,
+                  lineTension: 0,
+                  backgroundColor: "rgba(255, 0, 0, 0.1)",
+                  borderColor: "#f11e1f",
+                  borderWidth: 5,
+                  borderDash: [],
+                  borderDashOffset: 0.0,
+                  pointRadius: 4,//4,
+                  data: this.antenna.bp_sinc_index(this.state.width).map(item => {return({x: item, y: sinc(item)})}).toArray(),
+                },{
+                  label: "sinc_eval",
+                  fill: true,
+                  showLine: true,
+                  lineTension: 0,
+                  backgroundColor: "rgba(0, 0, 255, 0.1)",
+                  borderColor: "#1f8ef1",
+                  borderWidth: 5,
+                  borderDash: [],
+                  borderDashOffset: 0.0,
+                  pointRadius: 0,//4,
+                  data: range(-10, 10, 0.1).map(item => {return({x: item, y: sinc(item)})}).toArray(),
+                }
+              ]
+            }}
+            options = {{
+              animation: {
+                  duration: 0
+              },
+              legend: {
+                display: false
+              },
+              tooltips: {
+                enabled: false,
+              },
+              responsive: true,
+              maintainAspectRatio: true,
+              aspectRatio: 1,
+              scales: {
+                yAxes: [
+                  {
+                    gridLines: {
+                      display: true,
+                      drawBorder: false,
+                      color: "rgba(255,255,255,0.1)",
+                      zeroLineColor: "transparent"
+                    },
+                    ticks: {
+                      min: -1.2,
+                      max: 1.2,
+                      fontColor: "#9a9a9a",
+                      stepSize: 2,
+                    }
+                  }
+                ],
+                xAxes: [
+                  {
+                    gridLines: {
+                      display: true,
+                      drawBorder: false,
+                      color: "rgba(255,255,255,0.1)",
+                      zeroLineColor: "transparent"
+                    },
+                    ticks: {
+                      enabled: false,
+                      min: -10,
+                      max: 10,
+                      fontColor: "#9a9a9a",
+                      stepSize: 2,
+                    }
+                  }
+                ]
+              }
+            }}
+          />
+          </CardBody>
+          </Card>
           </Col>
           <Col lg="3">
             <Card>
