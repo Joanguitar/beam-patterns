@@ -47,12 +47,11 @@ You don’t have to ever use `eject`. The curated feature set is suitable for sm
 
 #### index.js
 
+substitute
 ```javascript
 serviceWorker.unregister();
 ```
-
 by
-
 ```javascript
 serviceWorker.register();
 ```
