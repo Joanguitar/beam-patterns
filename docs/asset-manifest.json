@@ -1,24 +1,27 @@
 {
   "files": {
-    "main.css": "/beam-patterns/static/css/main.dcc794a3.chunk.css",
-    "main.js": "/beam-patterns/static/js/main.5b586208.chunk.js",
-    "main.js.map": "/beam-patterns/static/js/main.5b586208.chunk.js.map",
+    "main.css": "/beam-patterns/static/css/main.63686936.chunk.css",
+    "main.js": "/beam-patterns/static/js/main.0e5705fd.chunk.js",
+    "main.js.map": "/beam-patterns/static/js/main.0e5705fd.chunk.js.map",
     "runtime-main.js": "/beam-patterns/static/js/runtime-main.2dcfd4c0.js",
     "runtime-main.js.map": "/beam-patterns/static/js/runtime-main.2dcfd4c0.js.map",
-    "static/js/2.e29aaf97.chunk.js": "/beam-patterns/static/js/2.e29aaf97.chunk.js",
-    "static/js/2.e29aaf97.chunk.js.map": "/beam-patterns/static/js/2.e29aaf97.chunk.js.map",
+    "static/css/2.3820c1da.chunk.css": "/beam-patterns/static/css/2.3820c1da.chunk.css",
+    "static/js/2.8e793da8.chunk.js": "/beam-patterns/static/js/2.8e793da8.chunk.js",
+    "static/js/2.8e793da8.chunk.js.map": "/beam-patterns/static/js/2.8e793da8.chunk.js.map",
     "index.html": "/beam-patterns/index.html",
-    "precache-manifest.cca929eb88fe4cfcefd98d586e9ec842.js": "/beam-patterns/precache-manifest.cca929eb88fe4cfcefd98d586e9ec842.js",
+    "precache-manifest.e5b83af65f5756ee39d0f28e3f1df0fe.js": "/beam-patterns/precache-manifest.e5b83af65f5756ee39d0f28e3f1df0fe.js",
     "service-worker.js": "/beam-patterns/service-worker.js",
-    "static/css/main.dcc794a3.chunk.css.map": "/beam-patterns/static/css/main.dcc794a3.chunk.css.map",
-    "static/js/2.e29aaf97.chunk.js.LICENSE.txt": "/beam-patterns/static/js/2.e29aaf97.chunk.js.LICENSE.txt",
-    "static/media/logo.svg": "/beam-patterns/static/media/logo.5d5d9eef.svg",
+    "static/css/2.3820c1da.chunk.css.map": "/beam-patterns/static/css/2.3820c1da.chunk.css.map",
+    "static/css/main.63686936.chunk.css.map": "/beam-patterns/static/css/main.63686936.chunk.css.map",
+    "static/js/2.8e793da8.chunk.js.LICENSE.txt": "/beam-patterns/static/js/2.8e793da8.chunk.js.LICENSE.txt",
+    "static/media/katex.min.css": "/beam-patterns/static/media/KaTeX_Typewriter-Regular.6cc31ea5.woff2",
     "static/media/nucleo-icons.css": "/beam-patterns/static/media/nucleo.f0b489a5.woff"
   },
   "entrypoints": [
     "static/js/runtime-main.2dcfd4c0.js",
-    "static/js/2.e29aaf97.chunk.js",
-    "static/css/main.dcc794a3.chunk.css",
-    "static/js/main.5b586208.chunk.js"
+    "static/css/2.3820c1da.chunk.css",
+    "static/js/2.8e793da8.chunk.js",
+    "static/css/main.63686936.chunk.css",
+    "static/js/main.0e5705fd.chunk.js"
   ]
 }
