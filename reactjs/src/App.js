@@ -67,6 +67,18 @@ class App extends React.Component {
     })
     this.update_beampattern_rel()
   }
+  handle_center_rel = (event, center_rel) => {
+    this.setState({
+      center: center_rel
+    })
+    this.update_beampattern_rel()
+  }
+  handle_width_rel = (event, width_rel) => {
+    this.setState({
+      width: width_rel
+    })
+    this.update_beampattern_rel()
+  }
   update_beampattern_rel() {
     // Beampattern rendering
     var bp = this.antenna.bp_sinc(this.state.width);
@@ -130,6 +142,30 @@ class App extends React.Component {
                       aria-labelledby="continuous-slider"
                       min={-pi}
                       max={pi}
+                      step={0.01}
+                    />
+                  </Col>
+                </Row>
+                <Row>
+                  <Col md="6">
+                    <label>Center</label>
+                    <Slider
+                      value={this.state.center}
+                      onChange={this.handle_center_rel}
+                      aria-labelledby="continuous-slider"
+                      min={-pi}
+                      max={pi}
+                      step={0.01}
+                    />
+                  </Col>
+                  <Col md="6">
+                    <label>Width</label>
+                    <Slider
+                      value={this.state.width}
+                      onChange={this.handle_width_rel}
+                      aria-labelledby="continuous-slider"
+                      min={0}
+                      max={2*pi}
                       step={0.01}
                     />
                   </Col>
