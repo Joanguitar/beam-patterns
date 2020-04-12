@@ -56,6 +56,17 @@ class App extends React.Component {
     })
     this.update_beampattern_rel()
   }
+  handle_b_rel = (event, b_rel) => {
+    var a_rel = this.state.center - this.state.width/2
+    if (a_rel > b_rel) {
+      a_rel = b_rel
+    }
+    this.setState({
+      center: (a_rel+b_rel)/2,
+      width: b_rel-a_rel,
+    })
+    this.update_beampattern_rel()
+  }
   update_beampattern_rel() {
     // Beampattern rendering
     var bp = this.antenna.bp_sinc(this.state.width);
@@ -101,9 +112,21 @@ class App extends React.Component {
               <CardFooter>
                 <Row>
                   <Col md="6">
+                    <label>Left extreme</label>
                     <Slider
                       value={a_rel}
                       onChange={this.handle_a_rel}
+                      aria-labelledby="continuous-slider"
+                      min={-pi}
+                      max={pi}
+                      step={0.01}
+                    />
+                  </Col>
+                  <Col md="6">
+                    <label>Right extreme</label>
+                    <Slider
+                      value={b_rel}
+                      onChange={this.handle_b_rel}
                       aria-labelledby="continuous-slider"
                       min={-pi}
                       max={pi}

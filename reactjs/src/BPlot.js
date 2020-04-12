@@ -32,6 +32,7 @@ class BPlot extends React.Component {
             data: this.props.beampattern,
           },
           {
+            label: "outer_circ",
             fill: true,
             showLine: true,
             lineTension: 0,
@@ -43,6 +44,7 @@ class BPlot extends React.Component {
             data: this.props.circle,
           },
           {
+              label: "circ_025",
               fill: false,
               showLine: true,
               lineTension: 0,
@@ -54,6 +56,7 @@ class BPlot extends React.Component {
               data: this.props.circle.map(point => {return({x: 0.25*point.x, y: 0.25*point.y})}),
           },
           {
+              label: "circ_050",
               fill: false,
               showLine: true,
               lineTension: 0,
@@ -65,6 +68,7 @@ class BPlot extends React.Component {
               data: this.props.circle.map(point => {return({x: 0.5*point.x, y: 0.5*point.y})}),
           },
           {
+              label: "circ_075",
               fill: false,
               showLine: true,
               lineTension: 0,
@@ -78,6 +82,9 @@ class BPlot extends React.Component {
         ]
         }}
         options = {{
+          animation: {
+              duration: 0
+          },
           legend: {
             display: false
           },
