@@ -1,4 +1,5 @@
-# beam-patterns
+# Beam-patterns
+Module for linear array beam-forming generation.
  
 Live demo [here](https://joanguitar.github.io/beam-patterns/).
 
