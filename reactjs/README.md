@@ -39,6 +39,13 @@ You don’t have to ever use `eject`. The curated feature set is suitable for sm
 
 ## Deploy in a subpage
 
+#### package.json
+
+```json
+"homepage": "https://joanguitar.github.io/beam-patterns",
+```
+
+##### The json is the only file that needs to be modified
 #### index.js
 
 ```javascript
@@ -51,10 +58,6 @@ const IS_DEV = !process.env.NODE_ENV || process.env.NODE_ENV === 'development'
     <Route path={IS_DEV ? '/' : '${process.env.PUBLIC_URL}/'} component={App} />
   </Router>
 ```
-
-#### package.json
-
-"homepage": "https://joanguitar.github.io/beam-patterns",
 
 #### Other files
 
