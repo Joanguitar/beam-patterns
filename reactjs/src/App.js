@@ -61,7 +61,7 @@ class App extends React.Component {
       width: pi,
       beampattern_rel: null,
       beampattern_abs: null,
-      bool_logarithmic: false,
+      bool_logarithmic: true,
     };
     const ang_domain = range(-pi, pi, 0.01);
     this.circle = ang_domain.map(ang => {return({x: Math.cos(ang), y: Math.sin(ang)})}).toArray();
