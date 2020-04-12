@@ -89,6 +89,46 @@ class App extends React.Component {
     this.update_beampattern_rel()
     this.update_beampattern_abs()
   }
+  handle_a_abs = (event, a_abs) => {
+    const a_rel = this.antenna.ang_abs2rel_2(a_abs)
+    var b_rel = this.state.center + this.state.width/2
+    if (a_rel > b_rel) {
+      b_rel = a_rel
+    }
+    this.setState({
+      center: (a_rel+b_rel)/2,
+      width: b_rel-a_rel,
+    })
+    this.update_beampattern_rel()
+    this.update_beampattern_abs()
+  }
+  handle_b_abs = (event, b_abs) => {
+    const b_rel = this.antenna.ang_abs2rel_2(b_abs)
+    var a_rel = this.state.center - this.state.width/2
+    if (a_rel > b_rel) {
+      a_rel = b_rel
+    }
+    this.setState({
+      center: (a_rel+b_rel)/2,
+      width: b_rel-a_rel,
+    })
+    this.update_beampattern_rel()
+    this.update_beampattern_abs()
+  }
+  handle_center_abs = (event, center_rel) => {
+    this.setState({
+      center: center_rel
+    })
+    this.update_beampattern_rel()
+    this.update_beampattern_abs()
+  }
+  handle_width_abs = (event, width_rel) => {
+    this.setState({
+      width: width_rel
+    })
+    this.update_beampattern_rel()
+    this.update_beampattern_abs()
+  }
   update_beampattern_rel() {
     // Beampattern rendering
     var bp = this.antenna.bp_sinc(this.state.width);
@@ -123,8 +163,8 @@ class App extends React.Component {
     // Angular domain properties
     const a_rel = this.state.center - this.state.width/2
     const b_rel = this.state.center + this.state.width/2
-    const a_abs = this.antenna.ang_rel2abs(a_rel)
-    const b_abs = this.antenna.ang_rel2abs(b_rel)
+    const a_abs = this.antenna.ang_rel2abs_2(a_rel)
+    const b_abs = this.antenna.ang_rel2abs_2(b_rel)
 
     // Render return
     return (
@@ -231,8 +271,8 @@ class App extends React.Component {
                   <Col md="6">
                     <label>Left extreme</label>
                     <Slider
-                      value={a_rel}
-                      onChange={this.handle_a_rel}
+                      value={a_abs}
+                      onChange={this.handle_a_abs}
                       aria-labelledby="continuous-slider"
                       valueLabelDisplay="auto"
                       getAriaValueText={valueLabelFormat}
@@ -261,8 +301,8 @@ class App extends React.Component {
                   <Col md="6">
                     <label>Right extreme</label>
                     <Slider
-                      value={b_rel}
-                      onChange={this.handle_b_rel}
+                      value={b_abs}
+                      onChange={this.handle_b_abs}
                       aria-labelledby="continuous-slider"
                       valueLabelDisplay="auto"
                       getAriaValueText={valueLabelFormat}

@@ -25,36 +25,38 @@ class AntennaArray{
   constructor(n_antennas, lambda_ratio){
     this.n_antennas = n_antennas;
     this.lambda_ratio = lambda_ratio;
-    this.antenna_index = range(0, n_antennas)
+    this.antenna_index = range(0, n_antennas);
+    this.ang_const = 2*lambda_ratio*pi;
   }
   // Angle conversions
   ang_abs2rel(ang){
-    const my_const = 2*this.lambda_ratio*pi
-    var my_ang = ang
-    var output = 0
-    while (my_ang > my_const) {
-      output += my_const
-      my_ang -= 2*pi
-    }
-    while (my_ang < -my_const) {
-      output -= my_const
-      my_ang += 2*pi
-    }
-    return(output + my_const*Math.sin(my_ang))
+    return(this.ang_const*Math.sin(ang))
   }
-  ang_rel2abs(ang){
-    const my_const = 2*this.lambda_ratio*pi
+  ang_abs2rel_2(ang){
     var my_ang = ang
     var output = 0
-    while (my_ang > my_const) {
+    while (my_ang > pi/2) {
+      output += 2*this.ang_const
+      my_ang -= pi
+    }
+    while (my_ang < -pi/2) {
+      output -= 2*this.ang_const
+      my_ang += pi
+    }
+    return(output + this.ang_const*Math.sin(my_ang))
+  }
+  ang_rel2abs_2(ang){
+    var my_ang = ang
+    var output = 0
+    while (my_ang > this.ang_const) {
       output += pi
-      my_ang -= 2*my_const
+      my_ang -= 2*this.ang_const
     }
-    while (my_ang < -my_const) {
+    while (my_ang < -this.ang_const) {
       output -= pi
-      my_ang += 2*my_const
+      my_ang += 2*this.ang_const
     }
-    return(output + Math.asin(my_ang/my_const))
+    return(output + Math.asin(my_ang/this.ang_const))
   }
   // Steering function
   bp_steer(bp, ang){
