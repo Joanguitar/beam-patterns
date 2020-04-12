@@ -1,4 +1,4 @@
-import {abs, range, exp, complex, subtract, multiply, dotMultiply, pi, zeros, sum, sqrt} from "mathjs"
+import {abs, range, exp, complex, subtract, multiply, dotMultiply, pi, sum, sqrt} from "mathjs"
 
 function sinc(ang){
   ang *= pi
@@ -72,22 +72,40 @@ class AntennaArray{
     return(sinc_index.map(item => sinc(item)))
   }
   // Array response
-  set_ang_domaing_rel(x){
+  set_ang_domain_rel(x){
     this.ang_domain_rel = x;
-    const exp_index = x.map(item => multiply(this.antenna_index, item))
-    this.response_domain_rel = exp_index.map(item => expi(item))
+    const exp_index = x.map(item => multiply(this.antenna_index, item));
+    this.response_domain_rel = exp_index.map(item => expi(item));
   }
   array_response_rel(bp){
-    return(multiply(this.response_domain_rel, bp))
+    return(multiply(this.response_domain_rel, bp));
   }
-  set_ang_domaing_abs(x){
+  set_ang_domain_abs(x){
     this.ang_domain_abs = x;
-    const exp_index = x.map(item => multiply(this.antenna_index, this.ang_abs2rel(item)))
+    const exp_index = x.map(item => multiply(this.antenna_index, this.ang_abs2rel(item)));
     console.log(exp_index);
     this.response_domain_abs = exp_index.map(item => expi(item))
   }
   array_response_abs(bp){
     return(multiply(this.response_domain_abs, bp))
+  }
+  // Setters
+  set_n_antennas(n_antennas){
+    this.n_antennas = n_antennas;
+    this.antenna_index = range(0, n_antennas);
+    if (this.ang_domain_rel) {
+      this.set_ang_domain_rel(this.ang_domain_rel)
+    }
+    if (this.ang_domain_abs) {
+      this.set_ang_domain_abs(this.ang_domain_abs)
+    }
+  }
+  set_lambda_ratio(lambda_ratio){
+    this.lambda_ratio = lambda_ratio;
+    this.ang_const = 2*lambda_ratio*pi;
+    if (this.ang_domain_abs) {
+      this.set_ang_domain_abs(this.ang_domain_abs)
+    }
   }
 }
 

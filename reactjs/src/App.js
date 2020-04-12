@@ -1,7 +1,4 @@
 import React from 'react';
-import { Scatter } from 'react-chartjs-2';
-import logo from './logo.svg';
-import './App.css';
 
 import {abs, range, pi, max} from 'mathjs';
 import AntennaArray from './beampatterns.js';
@@ -17,17 +14,12 @@ import {
   CardFooter,
   CardText,
   CardTitle,
-  DropdownToggle,
-  DropdownMenu,
-  DropdownItem,
-  UncontrolledDropdown,
   Label,
   FormGroup,
   Input,
   Table,
   Row,
-  Col,
-  UncontrolledTooltip
+  Col
 } from "reactstrap";
 
 import Slider from '@material-ui/core/Slider';
@@ -50,8 +42,8 @@ class App extends React.Component {
     const ang_domain = range(-pi, pi, 0.01);
     this.circle = ang_domain.map(ang => {return({x: Math.cos(ang), y: Math.sin(ang)})}).toArray();
     this.antenna = new AntennaArray(16, 0.5);
-    this.antenna.set_ang_domaing_rel(ang_domain);
-    this.antenna.set_ang_domaing_abs(ang_domain);
+    this.antenna.set_ang_domain_rel(ang_domain);
+    this.antenna.set_ang_domain_abs(ang_domain);
   }
   handle_a_rel = (event, a_rel) => {
     var b_rel = this.state.center + this.state.width/2
@@ -153,6 +145,15 @@ class App extends React.Component {
       width: b_rel-a_rel,
     })
     this.update_beampattern_rel()
+    this.update_beampattern_abs()
+  }
+  handle_n_antennas = (event, n_antennas) => {
+    this.antenna.set_n_antennas(n_antennas)
+    this.update_beampattern_rel()
+    this.update_beampattern_abs()
+  }
+  handle_lambda_ratio = (event, lambda_ratio) => {
+    this.antenna.set_lambda_ratio(lambda_ratio)
     this.update_beampattern_abs()
   }
   update_beampattern_rel() {
@@ -364,6 +365,49 @@ class App extends React.Component {
                   </Col>
                 </Row>
               </CardFooter>
+            </Card>
+          </Col>
+          <Col lg="3">
+            <Card>
+              <CardHeader>
+                <CardTitle>
+                  <h3>
+                    Antenna array properties
+                  </h3>
+                </CardTitle>
+              </CardHeader>
+              <CardBody>
+                <Row>
+                  <Col md="12">
+                    <label>Number of antennas</label>
+                    <Slider
+                      value={this.antenna.n_antennas}
+                      onChange={this.handle_n_antennas}
+                      aria-labelledby="continuous-slider"
+                      valueLabelDisplay="auto"
+                      min={2}
+                      max={64}
+                      step={1}
+                    />
+                  </Col>
+                </Row>
+                <Row>
+                  <Col md="12">
+                    <label>
+                      <InlineMath math="\frac{d}{\lambda}"/>
+                    </label>
+                    <Slider
+                      value={this.antenna.lambda_ratio}
+                      onChange={this.handle_lambda_ratio}
+                      aria-labelledby="continuous-slider"
+                      valueLabelDisplay="auto"
+                      min={0.1}
+                      max={2}
+                      step={0.05}
+                    />
+                  </Col>
+                </Row>
+              </CardBody>
             </Card>
           </Col>
         </Row>
