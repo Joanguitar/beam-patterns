@@ -31,6 +31,8 @@ import {
 } from "reactstrap";
 
 import Slider from '@material-ui/core/Slider';
+import 'katex/dist/katex.min.css';
+import { InlineMath, BlockMath } from 'react-katex';
 
 function valueLabelFormat(value){
   return(Math.round(value*180/pi)+'°')
@@ -104,10 +106,29 @@ class App extends React.Component {
   }
   handle_b_abs = (event, b_abs) => {
     const b_rel = this.antenna.ang_abs2rel_2(b_abs)
-    var a_rel = this.state.center - this.state.width/2
+    var a_rel = this.state.center - this.state.width/2;
     if (a_rel > b_rel) {
-      a_rel = b_rel
+      a_rel = b_rel;
     }
+    this.setState({
+      center: (a_rel+b_rel)/2,
+      width: b_rel-a_rel,
+    })
+    this.update_beampattern_rel();
+    this.update_beampattern_abs();
+  }
+  handle_center_abs = (event, center_abs) => {
+    // Compute
+    var a_rel = this.state.center - this.state.width/2;
+    var b_rel = this.state.center + this.state.width/2;
+    var a_abs = this.antenna.ang_rel2abs_2(a_rel);
+    var b_abs = this.antenna.ang_rel2abs_2(b_rel);
+    const width_abs = b_abs - a_abs;
+    // Substitute new values
+    a_abs = center_abs - width_abs/2
+    b_abs = center_abs + width_abs/2
+    a_rel = this.antenna.ang_abs2rel_2(a_abs)
+    b_rel = this.antenna.ang_abs2rel_2(b_abs)
     this.setState({
       center: (a_rel+b_rel)/2,
       width: b_rel-a_rel,
@@ -115,16 +136,21 @@ class App extends React.Component {
     this.update_beampattern_rel()
     this.update_beampattern_abs()
   }
-  handle_center_abs = (event, center_rel) => {
+  handle_width_abs = (event, width_abs) => {
+    // Compute
+    var a_rel = this.state.center - this.state.width/2;
+    var b_rel = this.state.center + this.state.width/2;
+    var a_abs = this.antenna.ang_rel2abs_2(a_rel);
+    var b_abs = this.antenna.ang_rel2abs_2(b_rel);
+    const center_abs = (a_abs + b_abs)/2;
+    // Substitute new values
+    a_abs = center_abs - width_abs/2
+    b_abs = center_abs + width_abs/2
+    a_rel = this.antenna.ang_abs2rel_2(a_abs)
+    b_rel = this.antenna.ang_abs2rel_2(b_abs)
     this.setState({
-      center: center_rel
-    })
-    this.update_beampattern_rel()
-    this.update_beampattern_abs()
-  }
-  handle_width_abs = (event, width_rel) => {
-    this.setState({
-      width: width_rel
+      center: (a_rel+b_rel)/2,
+      width: b_rel-a_rel,
     })
     this.update_beampattern_rel()
     this.update_beampattern_abs()
@@ -161,10 +187,12 @@ class App extends React.Component {
   }
   render() {
     // Angular domain properties
-    const a_rel = this.state.center - this.state.width/2
-    const b_rel = this.state.center + this.state.width/2
-    const a_abs = this.antenna.ang_rel2abs_2(a_rel)
-    const b_abs = this.antenna.ang_rel2abs_2(b_rel)
+    const a_rel = this.state.center - this.state.width/2;
+    const b_rel = this.state.center + this.state.width/2;
+    const a_abs = this.antenna.ang_rel2abs_2(a_rel);
+    const b_abs = this.antenna.ang_rel2abs_2(b_rel);
+    const center_abs = (a_abs + b_abs)/2;
+    const width_abs = b_abs - a_abs;
 
     // Render return
     return (
@@ -179,6 +207,10 @@ class App extends React.Component {
                   <h3>
                     Beam-pattern
                   </h3>
+                  Relative angle:
+                  <InlineMath>
+                    \phi=2\pi\lambda\sin(\varphi)
+                  </InlineMath>
                 </CardTitle>
               </CardHeader>
               <CardBody>
@@ -258,6 +290,10 @@ class App extends React.Component {
                   <h3>
                     Beam-pattern
                   </h3>
+                  Real angle:
+                  <InlineMath>
+                    \varphi
+                  </InlineMath>
                 </CardTitle>
               </CardHeader>
               <CardBody>
@@ -277,22 +313,22 @@ class App extends React.Component {
                       valueLabelDisplay="auto"
                       getAriaValueText={valueLabelFormat}
                       valueLabelFormat={valueLabelFormat}
-                      min={-pi}
-                      max={pi}
+                      min={-this.antenna.ang_const/2}
+                      max={this.antenna.ang_const/2}
                       step={0.01}
                     />
                   </Col>
                   <Col md="6">
                     <label>Center</label>
                     <Slider
-                      value={this.state.center}
-                      onChange={this.handle_center_rel}
+                      value={center_abs}
+                      onChange={this.handle_center_abs}
                       aria-labelledby="continuous-slider"
                       valueLabelDisplay="auto"
                       getAriaValueText={valueLabelFormat}
                       valueLabelFormat={valueLabelFormat}
-                      min={-pi}
-                      max={pi}
+                      min={-this.antenna.ang_const/2}
+                      max={this.antenna.ang_const/2}
                       step={0.01}
                     />
                   </Col>
@@ -307,22 +343,22 @@ class App extends React.Component {
                       valueLabelDisplay="auto"
                       getAriaValueText={valueLabelFormat}
                       valueLabelFormat={valueLabelFormat}
-                      min={-pi}
-                      max={pi}
+                      min={-this.antenna.ang_const/2}
+                      max={this.antenna.ang_const/2}
                       step={0.01}
                     />
                   </Col>
                   <Col md="6">
                     <label>Width</label>
                     <Slider
-                      value={this.state.width}
-                      onChange={this.handle_width_rel}
+                      value={width_abs}
+                      onChange={this.handle_width_abs}
                       aria-labelledby="continuous-slider"
                       valueLabelDisplay="auto"
                       getAriaValueText={valueLabelFormat}
                       valueLabelFormat={valueLabelFormat}
                       min={0}
-                      max={2*pi}
+                      max={this.antenna.ang_const}
                       step={0.01}
                     />
                   </Col>
