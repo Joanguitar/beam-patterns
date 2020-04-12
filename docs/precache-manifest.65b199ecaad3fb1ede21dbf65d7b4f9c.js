@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "14b12a63fc67b59f56cba4bcc16c7a45",
+    "revision": "32cf22aad8e59aaf76ac6f0a862e4c1d",
     "url": "/beam-patterns/index.html"
   },
   {
