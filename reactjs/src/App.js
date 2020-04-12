@@ -23,6 +23,11 @@ import {
   Col
 } from "reactstrap";
 
+import Radio from '@material-ui/core/Radio';
+import RadioGroup from '@material-ui/core/RadioGroup';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import FormControl from '@material-ui/core/FormControl';
+import FormLabel from '@material-ui/core/FormLabel';
 import Slider from '@material-ui/core/Slider';
 import 'katex/dist/katex.min.css';
 import { InlineMath, BlockMath } from 'react-katex';
@@ -56,6 +61,7 @@ class App extends React.Component {
       width: pi,
       beampattern_rel: null,
       beampattern_abs: null,
+      bool_logarithmic: false,
     };
     const ang_domain = range(-pi, pi, 0.01);
     this.circle = ang_domain.map(ang => {return({x: Math.cos(ang), y: Math.sin(ang)})}).toArray();
@@ -71,9 +77,7 @@ class App extends React.Component {
     this.setState({
       center: (a_rel+b_rel)/2,
       width: b_rel-a_rel,
-    })
-    this.update_beampattern_rel()
-    this.update_beampattern_abs()
+    }, this.update_beampattern_both)
   }
   handle_b_rel = (event, b_rel) => {
     var a_rel = this.state.center - this.state.width/2
@@ -83,23 +87,17 @@ class App extends React.Component {
     this.setState({
       center: (a_rel+b_rel)/2,
       width: b_rel-a_rel,
-    })
-    this.update_beampattern_rel()
-    this.update_beampattern_abs()
+    }, this.update_beampattern_both)
   }
   handle_center_rel = (event, center_rel) => {
     this.setState({
       center: center_rel
-    })
-    this.update_beampattern_rel()
-    this.update_beampattern_abs()
+    }, this.update_beampattern_both)
   }
   handle_width_rel = (event, width_rel) => {
     this.setState({
       width: width_rel
-    })
-    this.update_beampattern_rel()
-    this.update_beampattern_abs()
+    }, this.update_beampattern_both)
   }
   handle_a_abs = (event, a_abs) => {
     const a_rel = this.antenna.ang_abs2rel_2(a_abs)
@@ -110,9 +108,7 @@ class App extends React.Component {
     this.setState({
       center: (a_rel+b_rel)/2,
       width: b_rel-a_rel,
-    })
-    this.update_beampattern_rel()
-    this.update_beampattern_abs()
+    }, this.update_beampattern_both)
   }
   handle_b_abs = (event, b_abs) => {
     const b_rel = this.antenna.ang_abs2rel_2(b_abs)
@@ -123,9 +119,7 @@ class App extends React.Component {
     this.setState({
       center: (a_rel+b_rel)/2,
       width: b_rel-a_rel,
-    })
-    this.update_beampattern_rel();
-    this.update_beampattern_abs();
+    }, this.update_beampattern_both)
   }
   handle_center_abs = (event, center_abs) => {
     // Compute
@@ -142,9 +136,7 @@ class App extends React.Component {
     this.setState({
       center: (a_rel+b_rel)/2,
       width: b_rel-a_rel,
-    })
-    this.update_beampattern_rel()
-    this.update_beampattern_abs()
+    }, this.update_beampattern_both)
   }
   handle_width_abs = (event, width_abs) => {
     // Compute
@@ -161,9 +153,7 @@ class App extends React.Component {
     this.setState({
       center: (a_rel+b_rel)/2,
       width: b_rel-a_rel,
-    })
-    this.update_beampattern_rel()
-    this.update_beampattern_abs()
+    }, this.update_beampattern_both)
   }
   handle_n_antennas = (event, n_antennas) => {
     this.antenna.set_n_antennas(n_antennas)
@@ -174,16 +164,28 @@ class App extends React.Component {
     this.antenna.set_lambda_ratio(lambda_ratio)
     this.update_beampattern_abs()
   }
+  handle_bool_logarithmic = (event, bool_logarithmic) => {
+    this.setState({bool_logarithmic: (bool_logarithmic == "L")}, this.update_beampattern_both)
+  }
+  update_beampattern_both() {
+    this.update_beampattern_rel()
+    this.update_beampattern_abs()
+  }
   update_beampattern_rel() {
     // Beampattern rendering
     var bp = this.antenna.bp_sinc(this.state.width);
     bp = this.antenna.bp_steer(bp, this.state.center);
     var rad = this.antenna.array_response_rel(bp).map(rr => abs(rr)**2).toArray();
     const r_max = max(rad)
+    rad = rad.map(rr => rr/r_max)
+    if (this.state.bool_logarithmic) {
+      rad = rad.map(rr => 0.25*Math.log10(rr)+1)   // Logarithmic scaled to [-40, 0] -> [0, 1]
+      rad = rad.map(rr => (rr > 0 ? rr : 0))
+    }
     const beampattern = this.circle.map((cc, ii) => {
       return({
-      x: cc.x*rad[ii]/r_max,
-      y: cc.y*rad[ii]/r_max,
+      x: cc.x*rad[ii],
+      y: cc.y*rad[ii],
     })})
     this.setState({beampattern_rel: beampattern})
   }
@@ -193,10 +195,15 @@ class App extends React.Component {
     bp = this.antenna.bp_steer(bp, this.state.center);
     var rad = this.antenna.array_response_abs(bp).map(rr => abs(rr)**2).toArray();
     const r_max = max(rad)
+    rad = rad.map(rr => rr/r_max)
+    if (this.state.bool_logarithmic) {
+      rad = rad.map(rr => 0.25*Math.log10(rr)+1)   // Logarithmic scaled to [-40, 0] -> [0, 1]
+      rad = rad.map(rr => (rr > 0 ? rr : 0))
+    }
     const beampattern = this.circle.map((cc, ii) => {
       return({
-      x: cc.x*rad[ii]/r_max,
-      y: cc.y*rad[ii]/r_max,
+      x: cc.x*rad[ii],
+      y: cc.y*rad[ii],
     })})
     this.setState({beampattern_abs: beampattern})
   }
@@ -426,7 +433,9 @@ class App extends React.Component {
               <CardFooter>
                 <Row>
                   <Col md="6">
-                    <label>Left extreme</label>
+                    <FormLabel component="legend">
+                      Left extreme
+                    </FormLabel>
                     <Slider
                       value={a_rel}
                       onChange={this.handle_a_rel}
@@ -440,7 +449,9 @@ class App extends React.Component {
                     />
                   </Col>
                   <Col md="6">
-                    <label>Center</label>
+                    <FormLabel component="legend">
+                      Center
+                    </FormLabel>
                     <Slider
                       value={this.state.center}
                       onChange={this.handle_center_rel}
@@ -448,6 +459,7 @@ class App extends React.Component {
                       valueLabelDisplay="auto"
                       getAriaValueText={valueLabelFormat}
                       valueLabelFormat={valueLabelFormat}
+                      track={false}
                       min={-pi}
                       max={pi}
                       step={0.01}
@@ -456,7 +468,9 @@ class App extends React.Component {
                 </Row>
                 <Row>
                   <Col md="6">
-                    <label>Right extreme</label>
+                    <FormLabel component="legend">
+                      Right extreme
+                    </FormLabel>
                     <Slider
                       value={b_rel}
                       onChange={this.handle_b_rel}
@@ -470,7 +484,9 @@ class App extends React.Component {
                     />
                   </Col>
                   <Col md="6">
-                    <label>Width</label>
+                    <FormLabel component="legend">
+                      Width
+                    </FormLabel>
                     <Slider
                       value={this.state.width}
                       onChange={this.handle_width_rel}
@@ -509,7 +525,9 @@ class App extends React.Component {
               <CardFooter>
                 <Row>
                   <Col md="6">
-                    <label>Left extreme</label>
+                    <FormLabel component="legend">
+                      Left extreme
+                    </FormLabel>
                     <Slider
                       value={a_abs}
                       onChange={this.handle_a_abs}
@@ -523,7 +541,9 @@ class App extends React.Component {
                     />
                   </Col>
                   <Col md="6">
-                    <label>Center</label>
+                    <FormLabel component="legend">
+                      Center
+                    </FormLabel>
                     <Slider
                       value={center_abs}
                       onChange={this.handle_center_abs}
@@ -531,6 +551,7 @@ class App extends React.Component {
                       valueLabelDisplay="auto"
                       getAriaValueText={valueLabelFormat}
                       valueLabelFormat={valueLabelFormat}
+                      track={false}
                       min={-this.antenna.ang_const/2}
                       max={this.antenna.ang_const/2}
                       step={0.01}
@@ -539,7 +560,9 @@ class App extends React.Component {
                 </Row>
                 <Row>
                   <Col md="6">
-                    <label>Right extreme</label>
+                    <FormLabel component="legend">
+                      Right extreme
+                    </FormLabel>
                     <Slider
                       value={b_abs}
                       onChange={this.handle_b_abs}
@@ -553,7 +576,9 @@ class App extends React.Component {
                     />
                   </Col>
                   <Col md="6">
-                    <label>Width</label>
+                    <FormLabel component="legend">
+                      Width
+                    </FormLabel>
                     <Slider
                       value={width_abs}
                       onChange={this.handle_width_abs}
@@ -582,7 +607,9 @@ class App extends React.Component {
               <CardBody>
                 <Row>
                   <Col md="12">
-                    <label>Number of antennas</label>
+                    <FormLabel component="legend">
+                      Number of antenna elements
+                    </FormLabel>
                     <Slider
                       value={this.antenna.n_antennas}
                       onChange={this.handle_n_antennas}
@@ -596,9 +623,9 @@ class App extends React.Component {
                 </Row>
                 <Row>
                   <Col md="12">
-                    <label>
+                    <FormLabel component="legend">
                       <InlineMath math="\frac{d}{\lambda}"/>
-                    </label>
+                    </FormLabel>
                     <Slider
                       value={this.antenna.lambda_ratio}
                       onChange={this.handle_lambda_ratio}
@@ -608,6 +635,18 @@ class App extends React.Component {
                       max={2}
                       step={0.05}
                     />
+                  </Col>
+                </Row>
+                <hr/>
+                <Row>
+                  <Col md="12">
+                    <FormLabel component="legend">
+                      Scale
+                    </FormLabel>
+                    <RadioGroup aria-label="Scale" name="scale" value={this.state.bool_logarithmic ? "L" : "N"} onChange={this.handle_bool_logarithmic}>
+                      <FormControlLabel value={"N"} control={<Radio />} label="Natural      [0,   1]" />
+                      <FormControlLabel value={"L"} control={<Radio />} label="Logarithmic  [-40, 0]" />
+                    </RadioGroup>
                   </Col>
                 </Row>
               </CardBody>
