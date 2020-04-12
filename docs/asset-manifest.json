@@ -1,27 +1,27 @@
 {
   "files": {
-    "main.css": "/beam-patterns/static/css/main.63686936.chunk.css",
-    "main.js": "/beam-patterns/static/js/main.83d28cda.chunk.js",
-    "main.js.map": "/beam-patterns/static/js/main.83d28cda.chunk.js.map",
-    "runtime-main.js": "/beam-patterns/static/js/runtime-main.2dcfd4c0.js",
-    "runtime-main.js.map": "/beam-patterns/static/js/runtime-main.2dcfd4c0.js.map",
-    "static/css/2.3820c1da.chunk.css": "/beam-patterns/static/css/2.3820c1da.chunk.css",
-    "static/js/2.8e793da8.chunk.js": "/beam-patterns/static/js/2.8e793da8.chunk.js",
-    "static/js/2.8e793da8.chunk.js.map": "/beam-patterns/static/js/2.8e793da8.chunk.js.map",
-    "index.html": "/beam-patterns/index.html",
-    "precache-manifest.fcf1ff296dd2cd79e20c9c462e87f193.js": "/beam-patterns/precache-manifest.fcf1ff296dd2cd79e20c9c462e87f193.js",
-    "service-worker.js": "/beam-patterns/service-worker.js",
-    "static/css/2.3820c1da.chunk.css.map": "/beam-patterns/static/css/2.3820c1da.chunk.css.map",
-    "static/css/main.63686936.chunk.css.map": "/beam-patterns/static/css/main.63686936.chunk.css.map",
-    "static/js/2.8e793da8.chunk.js.LICENSE.txt": "/beam-patterns/static/js/2.8e793da8.chunk.js.LICENSE.txt",
-    "static/media/katex.min.css": "/beam-patterns/static/media/KaTeX_Typewriter-Regular.6cc31ea5.woff2",
-    "static/media/nucleo-icons.css": "/beam-patterns/static/media/nucleo.f0b489a5.woff"
+    "main.css": "/static/css/main.358e16d6.chunk.css",
+    "main.js": "/static/js/main.8f84999f.chunk.js",
+    "main.js.map": "/static/js/main.8f84999f.chunk.js.map",
+    "runtime-main.js": "/static/js/runtime-main.c31ba872.js",
+    "runtime-main.js.map": "/static/js/runtime-main.c31ba872.js.map",
+    "static/css/2.1fddb571.chunk.css": "/static/css/2.1fddb571.chunk.css",
+    "static/js/2.28b12e43.chunk.js": "/static/js/2.28b12e43.chunk.js",
+    "static/js/2.28b12e43.chunk.js.map": "/static/js/2.28b12e43.chunk.js.map",
+    "index.html": "/index.html",
+    "precache-manifest.821447bd43877a016727a381fa30ecff.js": "/precache-manifest.821447bd43877a016727a381fa30ecff.js",
+    "service-worker.js": "/service-worker.js",
+    "static/css/2.1fddb571.chunk.css.map": "/static/css/2.1fddb571.chunk.css.map",
+    "static/css/main.358e16d6.chunk.css.map": "/static/css/main.358e16d6.chunk.css.map",
+    "static/js/2.28b12e43.chunk.js.LICENSE.txt": "/static/js/2.28b12e43.chunk.js.LICENSE.txt",
+    "static/media/katex.min.css": "/static/media/KaTeX_Typewriter-Regular.6cc31ea5.woff2",
+    "static/media/nucleo-icons.css": "/static/media/nucleo.f0b489a5.woff"
   },
   "entrypoints": [
-    "static/js/runtime-main.2dcfd4c0.js",
-    "static/css/2.3820c1da.chunk.css",
-    "static/js/2.8e793da8.chunk.js",
-    "static/css/main.63686936.chunk.css",
-    "static/js/main.83d28cda.chunk.js"
+    "static/js/runtime-main.c31ba872.js",
+    "static/css/2.1fddb571.chunk.css",
+    "static/js/2.28b12e43.chunk.js",
+    "static/css/main.358e16d6.chunk.css",
+    "static/js/main.8f84999f.chunk.js"
   ]
 }
