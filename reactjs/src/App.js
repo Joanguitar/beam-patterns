@@ -651,6 +651,19 @@ class App extends React.Component {
                 </Row>
               </CardBody>
             </Card>
+            <Card>
+              <CardHeader>
+                <CardTitle>
+                  <h3>
+                    Sources
+                  </h3>
+                </CardTitle>
+              </CardHeader>
+              <CardBody>
+                <h4><a href="https://github.com/Joanguitar/beam-patterns">Github</a></h4>
+                <h4><a href="http://eprints.networks.imdea.org/1499/1/IEEE%20AWPL%20-%20Fully-digital%20beam%20patterns.pdf">Publication</a></h4>
+              </CardBody>
+            </Card>
           </Col>
         </Row>
       </div>
