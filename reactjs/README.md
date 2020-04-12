@@ -39,6 +39,20 @@ You don’t have to ever use `eject`. The curated feature set is suitable for sm
 
 ## Deploy in a subpage
 
+#### Make the app progressive
+
+In index.js substitute
+
+```javascript
+serviceWorker.unregister();
+```
+
+by
+
+```javascript
+serviceWorker.register();
+```
+
 #### package.json
 
 ```json
