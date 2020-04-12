@@ -32,6 +32,10 @@ import {
 
 import Slider from '@material-ui/core/Slider';
 
+function valueLabelFormat(value){
+  return(Math.round(value*180/pi)+'°')
+}
+
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -99,6 +103,8 @@ class App extends React.Component {
     // Angular domain properties
     const a_rel = this.state.center - this.state.width/2
     const b_rel = this.state.center + this.state.width/2
+    //const a_abs = this.antenna.ang_rel2abs(a_rel)
+    //const b_abs = this.antenna.ang_rel2abs(b_rel)
 
     // Render return
     return (
@@ -129,17 +135,23 @@ class App extends React.Component {
                       value={a_rel}
                       onChange={this.handle_a_rel}
                       aria-labelledby="continuous-slider"
+                      valueLabelDisplay="auto"
+                      getAriaValueText={valueLabelFormat}
+                      valueLabelFormat={valueLabelFormat}
                       min={-pi}
                       max={pi}
                       step={0.01}
                     />
                   </Col>
                   <Col md="6">
-                    <label>Right extreme</label>
+                    <label>Center</label>
                     <Slider
-                      value={b_rel}
-                      onChange={this.handle_b_rel}
+                      value={this.state.center}
+                      onChange={this.handle_center_rel}
                       aria-labelledby="continuous-slider"
+                      valueLabelDisplay="auto"
+                      getAriaValueText={valueLabelFormat}
+                      valueLabelFormat={valueLabelFormat}
                       min={-pi}
                       max={pi}
                       step={0.01}
@@ -148,11 +160,14 @@ class App extends React.Component {
                 </Row>
                 <Row>
                   <Col md="6">
-                    <label>Center</label>
+                    <label>Right extreme</label>
                     <Slider
-                      value={this.state.center}
-                      onChange={this.handle_center_rel}
+                      value={b_rel}
+                      onChange={this.handle_b_rel}
                       aria-labelledby="continuous-slider"
+                      valueLabelDisplay="auto"
+                      getAriaValueText={valueLabelFormat}
+                      valueLabelFormat={valueLabelFormat}
                       min={-pi}
                       max={pi}
                       step={0.01}
@@ -164,6 +179,9 @@ class App extends React.Component {
                       value={this.state.width}
                       onChange={this.handle_width_rel}
                       aria-labelledby="continuous-slider"
+                      valueLabelDisplay="auto"
+                      getAriaValueText={valueLabelFormat}
+                      valueLabelFormat={valueLabelFormat}
                       min={0}
                       max={2*pi}
                       step={0.01}
