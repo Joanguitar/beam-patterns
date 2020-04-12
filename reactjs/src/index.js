@@ -15,7 +15,7 @@ const IS_DEV = !process.env.NODE_ENV || process.env.NODE_ENV === 'development'
 
 ReactDOM.render(
   <React.StrictMode>
-    <Router basename={'/directory-name'}>
+    <Router basename={'/beam-patterns'}>
       <Route path={IS_DEV ? '/' : '${process.env.PUBLIC_URL}/'} component={App} />
     </Router>
   </React.StrictMode>,
