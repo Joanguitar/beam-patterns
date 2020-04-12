@@ -411,7 +411,7 @@ class App extends React.Component {
                   <h3>
                     Beam-pattern
                   </h3>
-                  Relative angle:
+                  Relative angle:<span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
                   <InlineMath>
                     \phi=2\pi\lambda\sin(\varphi)
                   </InlineMath>
@@ -494,7 +494,7 @@ class App extends React.Component {
                   <h3>
                     Beam-pattern
                   </h3>
-                  Real angle:
+                  Real angle:<span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
                   <InlineMath>
                     \varphi
                   </InlineMath>
