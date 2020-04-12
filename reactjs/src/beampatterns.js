@@ -67,7 +67,8 @@ class AntennaArray{
   bp_sinc(width){
     const sinc_index = multiply(subtract(this.antenna_index, (this.n_antennas-1)/2), width/(2*pi))
     var bp = sinc_index.map(item => sinc(item))
-    const bp_norm = sum(bp.map(cc => abs(cc)**2))
+    const bp_norm = sqrt(sum(bp.map(cc => abs(cc)**2)))
+    bp = bp.map(cc => cc/bp_norm)
     return(sinc_index.map(item => sinc(item)))
   }
   // Array response
