@@ -28,7 +28,7 @@ class AntennaArray{
     this.antenna_index = range(0, n_antennas)
   }
   // Angle conversions
-  ang_rel2abs(ang){
+  ang_abs2rel(ang){
     const my_const = 2*this.lambda_ratio*pi
     var my_ang = ang
     var output = 0
@@ -42,7 +42,7 @@ class AntennaArray{
     }
     return(output + my_const*Math.sin(my_ang))
   }
-  ang_abs2rel(ang){
+  ang_rel2abs(ang){
     const my_const = 2*this.lambda_ratio*pi
     var my_ang = ang
     var output = 0
@@ -78,6 +78,7 @@ class AntennaArray{
   set_ang_domaing_abs(x){
     this.ang_domain_abs = x;
     const exp_index = x.map(item => multiply(this.antenna_index, this.ang_abs2rel(item)))
+    console.log(exp_index);
     this.response_domain_abs = exp_index.map(item => expi(item))
   }
   array_response_abs(bp){
