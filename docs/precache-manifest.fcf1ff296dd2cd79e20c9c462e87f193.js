@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "21321df5e5c1e18be606b94dfa48f157",
+    "revision": "23128d390e974fb02ade419a8d5326a0",
     "url": "/beam-patterns/index.html"
   },
   {
@@ -8,7 +8,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/beam-patterns/static/css/2.3820c1da.chunk.css"
   },
   {
-    "revision": "ae5ca64d039adfa74ebc",
+    "revision": "121e2501e63f2bcd629e",
     "url": "/beam-patterns/static/css/main.63686936.chunk.css"
   },
   {
@@ -20,8 +20,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/beam-patterns/static/js/2.8e793da8.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "ae5ca64d039adfa74ebc",
-    "url": "/beam-patterns/static/js/main.cc8ecf20.chunk.js"
+    "revision": "121e2501e63f2bcd629e",
+    "url": "/beam-patterns/static/js/main.83d28cda.chunk.js"
   },
   {
     "revision": "a18bf914e8717a138d85",
