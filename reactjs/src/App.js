@@ -59,7 +59,7 @@ class App extends React.Component {
     };
     const ang_domain = range(-pi, pi, 0.01);
     this.circle = ang_domain.map(ang => {return({x: Math.cos(ang), y: Math.sin(ang)})}).toArray();
-    this.antenna = new AntennaArray(16, 0.5);
+    this.antenna = new AntennaArray(15, 0.5);
     this.antenna.set_ang_domain_rel(ang_domain);
     this.antenna.set_ang_domain_abs(ang_domain);
   }
@@ -218,90 +218,191 @@ class App extends React.Component {
       <div className="App">
         <Row>
           <Col lg="3">
-          <Card>
-          <CardBody>
-          <Scatter
-            data={{
-              datasets: [
-                {
-                  label: "sinc",
-                  fill: true,
-                  showLine: false,
-                  lineTension: 0,
-                  backgroundColor: "rgba(255, 0, 0, 0.1)",
-                  borderColor: "#f11e1f",
-                  borderWidth: 5,
-                  borderDash: [],
-                  borderDashOffset: 0.0,
-                  pointRadius: 4,//4,
-                  data: this.antenna.bp_sinc_index(this.state.width).map(item => {return({x: item, y: sinc(item)})}).toArray(),
-                },{
-                  label: "sinc_eval",
-                  fill: true,
-                  showLine: true,
-                  lineTension: 0,
-                  backgroundColor: "rgba(0, 0, 255, 0.1)",
-                  borderColor: "#1f8ef1",
-                  borderWidth: 5,
-                  borderDash: [],
-                  borderDashOffset: 0.0,
-                  pointRadius: 0,//4,
-                  data: range(-10, 10, 0.1).map(item => {return({x: item, y: sinc(item)})}).toArray(),
-                }
-              ]
-            }}
-            options = {{
-              animation: {
-                  duration: 0
-              },
-              legend: {
-                display: false
-              },
-              tooltips: {
-                enabled: false,
-              },
-              responsive: true,
-              maintainAspectRatio: true,
-              aspectRatio: 1,
-              scales: {
-                yAxes: [
-                  {
-                    gridLines: {
-                      display: true,
-                      drawBorder: false,
-                      color: "rgba(255,255,255,0.1)",
-                      zeroLineColor: "transparent"
-                    },
-                    ticks: {
-                      min: -1.2,
-                      max: 1.2,
-                      fontColor: "#9a9a9a",
-                      stepSize: 2,
-                    }
-                  }
-                ],
-                xAxes: [
-                  {
-                    gridLines: {
-                      display: true,
-                      drawBorder: false,
-                      color: "rgba(255,255,255,0.1)",
-                      zeroLineColor: "transparent"
-                    },
-                    ticks: {
-                      enabled: false,
-                      min: -10,
-                      max: 10,
-                      fontColor: "#9a9a9a",
-                      stepSize: 2,
-                    }
-                  }
-                ]
-              }
-            }}
-          />
-          </CardBody>
-          </Card>
+            <Card>
+              <CardHeader>
+                <CardTitle>
+                  <h3>
+                    Beam-pattern coefficients
+                  </h3>
+                </CardTitle>
+              </CardHeader>
+              <CardBody>
+                <Row>
+                  <Col>
+                    <Label>
+                      Absolute value
+                    </Label>
+                    <Scatter
+                      data={{
+                        datasets: [
+                          {
+                            label: "sinc",
+                            fill: true,
+                            showLine: false,
+                            lineTension: 0,
+                            backgroundColor: "rgba(255, 0, 0, 0.1)",
+                            borderColor: "#f11e1f",
+                            borderWidth: 5,
+                            borderDash: [],
+                            borderDashOffset: 0.0,
+                            pointRadius: 4,//4,
+                            data: this.antenna.bp_sinc_index(this.state.width).map(item => {return({x: item, y: sinc(item)})}).toArray(),
+                          },{
+                            label: "sinc_eval",
+                            fill: true,
+                            showLine: true,
+                            lineTension: 0,
+                            backgroundColor: "rgba(0, 0, 255, 0.1)",
+                            borderColor: "#1f8ef1",
+                            borderWidth: 5,
+                            borderDash: [],
+                            borderDashOffset: 0.0,
+                            pointRadius: 0,//4,
+                            data: range(-10, 10, 0.1).map(item => {return({x: item, y: sinc(item)})}).toArray(),
+                          }
+                        ]
+                      }}
+                      options = {{
+                        animation: {
+                            duration: 0
+                        },
+                        legend: {
+                          display: false
+                        },
+                        tooltips: {
+                          enabled: false,
+                        },
+                        responsive: true,
+                        maintainAspectRatio: true,
+                        aspectRatio: 1,
+                        scales: {
+                          yAxes: [
+                            {
+                              gridLines: {
+                                display: true,
+                                drawBorder: false,
+                                color: "rgba(255,255,255,0.1)",
+                                zeroLineColor: "transparent"
+                              },
+                              ticks: {
+                                min: -0.4,
+                                max: 1.2,
+                                fontColor: "#9a9a9a",
+                                stepSize: 2,
+                              }
+                            }
+                          ],
+                          xAxes: [
+                            {
+                              gridLines: {
+                                display: true,
+                                drawBorder: false,
+                                color: "rgba(255,255,255,0.1)",
+                                zeroLineColor: "transparent"
+                              },
+                              ticks: {
+                                enabled: false,
+                                min: -10,
+                                max: 10,
+                                fontColor: "#9a9a9a",
+                                stepSize: 2,
+                              }
+                            }
+                          ]
+                        }
+                      }}
+                    />
+                  </Col>
+                </Row>
+                <Row>
+                  <Col>
+                    <Label>
+                      Phase argument
+                    </Label>
+                    <Scatter
+                      data={{
+                        datasets: [
+                          {
+                            label: "sinc",
+                            fill: true,
+                            showLine: false,
+                            lineTension: 0,
+                            backgroundColor: "rgba(255, 0, 0, 0.1)",
+                            borderColor: "#f11e1f",
+                            borderWidth: 5,
+                            borderDash: [],
+                            borderDashOffset: 0.0,
+                            pointRadius: 4,//4,
+                            data: this.antenna.bp_steer_index(this.state.center).map((item, ii) => {return({x: ii, y: item})}).toArray(),
+                          },{
+                            label: "sinc_eval",
+                            fill: true,
+                            showLine: true,
+                            lineTension: 0,
+                            backgroundColor: "rgba(0, 0, 255, 0.1)",
+                            borderColor: "#1f8ef1",
+                            borderWidth: 5,
+                            borderDash: [],
+                            borderDashOffset: 0.0,
+                            pointRadius: 0,//4,
+                            data: range(0, this.antenna.n_antennas, 0.1).map(item => {return({x: item, y: this.state.center*(item - (this.antenna.n_antennas-1)/2)})}).toArray(),
+                          }
+                        ]
+                      }}
+                      options = {{
+                        animation: {
+                            duration: 0
+                        },
+                        legend: {
+                          display: false
+                        },
+                        tooltips: {
+                          enabled: false,
+                        },
+                        responsive: true,
+                        maintainAspectRatio: true,
+                        aspectRatio: 1,
+                        scales: {
+                          yAxes: [
+                            {
+                              gridLines: {
+                                display: true,
+                                drawBorder: false,
+                                color: "rgba(255,255,255,0.1)",
+                                zeroLineColor: "transparent"
+                              },
+                              ticks: {
+                                min: -pi*this.antenna.n_antennas/2,
+                                max: pi*this.antenna.n_antennas/2,
+                                fontColor: "#9a9a9a",
+                                stepSize: pi*this.antenna.n_antennas/2,
+                              }
+                            }
+                          ],
+                          xAxes: [
+                            {
+                              gridLines: {
+                                display: true,
+                                drawBorder: false,
+                                color: "rgba(255,255,255,0.1)",
+                                zeroLineColor: "transparent"
+                              },
+                              ticks: {
+                                enabled: false,
+                                min: 0,
+                                max: this.antenna.n_antennas,
+                                fontColor: "#9a9a9a",
+                                stepSize: 5,
+                              }
+                            }
+                          ]
+                        }
+                      }}
+                    />
+                  </Col>
+                </Row>
+              </CardBody>
+            </Card>
           </Col>
           <Col lg="3">
             <Card>

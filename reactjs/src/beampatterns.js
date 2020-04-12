@@ -59,8 +59,11 @@ class AntennaArray{
     return(output + Math.asin(my_ang/this.ang_const))
   }
   // Steering function
+  bp_steer_index(ang){
+    return(multiply(subtract(this.antenna_index, (this.n_antennas-1)/2), ang));
+  }
   bp_steer(bp, ang){
-    const steering_vector = multiply(this.antenna_index, ang).map(element => expi(element));
+    const steering_vector = this.bp_steer_index(ang).map(element => expi(element));
     return(dotMultiply(bp, steering_vector));
   }
   // Beam-pattern creation
